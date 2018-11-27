@@ -1,0 +1,3 @@
+{"devId":"MAI-M2-XXXX","dataList":[{"pm25":1442,"wet":47,"temp":27,"cho":0,"co2":0}]}
+
+

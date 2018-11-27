@@ -1,0 +1,60 @@
+#ifndef __MAINCONFIG_H
+#define __MAINCONFIG_H
+#define WIFI_ENABLE 1
+#define TH_ENABLE 0
+#define AUTO_POWEROFF 0
+#define DEBUG_MODE 0
+#define SYSTEM_ATUOPOFF_MS 600000 //10min
+#define RESET_WHILE_NO_DATEGET 60000
+#define DEVICE_VERSION "D1"
+#define DEVICE_VERSION_VER "D1 en"
+#define FIRMWARE_VERSION "1711"
+#define FPE_UID_ADDRESS 0x00110000
+
+#define FPE_NEVERUSED_ADDRESS 0x00001000
+#define MAIN_STATUS_ADDRESS 0x00000100
+#define PM_RATIO_ADDRESS 0x00000200
+#define LAST_TURNOFF_TIME_ADDR 0x00000300
+#define LAST_TEMP_FIX_ADDR 0x00000400
+#define COOL_DOWN_MINUTINES 16
+
+#define CO2_MAX_PPM 5000UL
+
+#define NO_LOGO_UI 1
+#define NO_OUTDOOR_UI 0
+#define MAC2UID 1
+#define PM25_SINGLE_MODE 0
+#if PM25_SINGLE_MODE
+	#define HCHO_ENABLE 0
+	#define CO2_ENABLE 0
+#else
+	#define HCHO_ENABLE 1
+	#define CO2_ENABLE 1
+#endif
+#define COMPRESS_BMP 0
+
+#define M1_MODE 1
+#if CO2_ENABLE
+
+#endif
+#define MAX(a,b) (a>b?a:b)
+#define MIN(a,b) (a<b?a:b)
+#define ABS(a) ((a)<0?-(a):(a))
+enum STATUS_ID
+{
+	STATUS_ALL_SHOW = 0,	
+//#if (!PM25_SINGLE_MODE)
+	#if !NO_OUTDOOR_UI
+	STATUS_OUTDOOR,
+	#endif
+//#endif
+//	STATUS_ALL_SHOW = 0,
+	#if HCHO_ENABLE
+//	STATUS_SINGLE_HCHO,
+	#endif
+	STATUS_DATA_LIST,
+	STATUS_WIFI ,
+	STATUS_POWEROFF,
+};
+//#define LCD_DRIVER_ST7789	
+#endif

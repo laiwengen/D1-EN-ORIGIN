@@ -1,23 +1,13 @@
-# Windows thumbnail cache files
-Thumbs.db
-ehthumbs.db
-ehthumbs_vista.db
+*.o
+*.bak
+*.crf
+*._2i
+*.d
+*.bak
+!/D1_UDP_newUI_newWifi_V2_ENG-ORIGIN/Projects/MDK-ARM/
 
-# Folder config file
-Desktop.ini
-
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
-
-# Windows shortcuts
-*.lnk
-
-# =========================
-# Operating System Files
-# =========================
+/D1_UDP_newUI_newWifi_V2_ENG-ORIGIN/Projects/MDK-ARM/*
+!/D1_UDP_newUI_newWifi_V2_ENG-ORIGIN/Projects/MDK-ARM/*.s
+# !/D1_UDP_newUI_newWifi_V2_ENG-ORIGIN/Projects/MDK-ARM/*.uvoptx
+!/D1_UDP_newUI_newWifi_V2_ENG-ORIGIN/Projects/MDK-ARM/*.uvprojx
+*.TMP
