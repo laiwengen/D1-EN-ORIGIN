@@ -470,7 +470,7 @@ void lcd_init(void)
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET);//power
 	hw_init();
 	lcd_erase(240,320);
-	lcd_setRotation(90);
+	lcd_setRotation(0);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_8,GPIO_PIN_SET);//power
 
 	
@@ -3536,8 +3536,8 @@ void lcd_showAll(uint32_t* data_pm,uint8_t needRedraw)
 		.h = 13,		
 	};
 
-	uint16_t colorBar2[] = {rgb2c(64,255,0),rgb2c(64,255,0),rgb2c(255,255,0),rgb2c(255,126,0),rgb2c(255,0,0), rgb2c(153,0,76)};	
-	uint32_t grade2[] = {0,3,8,30};	
+	uint16_t colorBar2[] = {rgb2c(64,255,0),rgb2c(64,255,0),rgb2c(255,255,0),rgb2c(255,126,0),rgb2c(255,0,0), rgb2c(153,0,76)};
+	uint32_t grade2[] = {0,3,8,30,50,75,150};	
 //	setLevelColor(GAS_CH2O,data_pm[1],&color,&level);	
 	
 	if (g_main_10s_countDown == 0)
