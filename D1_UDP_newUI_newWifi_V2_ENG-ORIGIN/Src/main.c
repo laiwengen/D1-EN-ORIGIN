@@ -2037,13 +2037,7 @@ void mainThread(void)
 	{
 	return;
 	}
-//	count = (count + 1) & 0x07;
-//	if (count == 0x07)
-//	{
-//		updateOutdoorAQI();
-//		lcd_refreshed = 0;
-//		return;
-//	}
+
 //	th_update();
 	cJSON* json = cJSON_CreateObject();
 	if (json)

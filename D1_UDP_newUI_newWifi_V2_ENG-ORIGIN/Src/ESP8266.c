@@ -928,7 +928,6 @@ uint8_t esp8266_udp(char * str, char* address, uint16_t port,uint8_t muxId)
 		{
 			setCommandWait(1000,"CIPMUX","1",NULL); 
 			esp8266_connectUDP(address,port,0);
-			//esp8266_connectUDP("udp.support.hw99lt.com",50505,1);
 			lastAddress = address;
 			lastPort = port;
 		}
