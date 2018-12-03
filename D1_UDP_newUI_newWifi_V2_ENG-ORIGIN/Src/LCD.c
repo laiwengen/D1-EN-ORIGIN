@@ -1619,11 +1619,13 @@ void lcd_showAQIgrade(uint8_t grade,uint8_t needRedraw,uint16_t color,uint16_t m
 {
 //	const uint16_t color[] = {rgb2c(0,228,0),rgb2c(255,255,0),rgb2c(255,64,0),rgb2c(255,0,0),rgb2c(153,0,76),rgb2c(126,0,35)};
 	
-	Rect_t pos_grade = {.x =70+xOffset,.y = 280+yOffset,.w = 24,.h = 24,};	
+	Rect_t pos_grade = {.x =60,.y = 280,.w = 24,.h = 24,};	
+	Rect_t pos_backRetangle =  {.x = 0,.y = 270,.w = 240,.h = 43,};
+//	Rect_t pos_grade = {.x =70+xOffset,.y = 280+yOffset,.w = 24,.h = 24,};	
 //	Rect_t pos_grade ={.x = 90+xOffset,.y = 205+yOffset,.w = 15,.h = 14,};
 //	Rect_t pos_twoWord = {.x = 102+xOffset,.y = 205+yOffset,.w = 15,.h = 14,};
 //	Rect_t pos_clear 	=  {.x = 86+xOffset,.y = 202+yOffset,.w = 155-86,.h = 20,};
-	Rect_t pos_backRetangle =  {.x = 0+xOffset,.y = 270+yOffset,.w = 240,.h = 50,};
+//	Rect_t pos_backRetangle =  {.x = 0+xOffset,.y = 270+yOffset,.w = 240,.h = 50,};
 //	Rect_t pos_roundR =  {.x =155+xOffset,.y = 202+yOffset,.w = 7,.h = 20,};
 	if (needRedraw)
 	{
@@ -1633,147 +1635,33 @@ void lcd_showAQIgrade(uint8_t grade,uint8_t needRedraw,uint16_t color,uint16_t m
 //		lcd_drawBMP(gImage_roundRight, &pos_roundR,0,color,0);	
 	lcd_drawRectangle(&pos_backRetangle,color);
 	}
-	if (mode == TEMPRATURE)
-	{
-		switch (grade)
-		{/*" Ê",0*//*"  ",1*//*"—◊",2*//*"»»",3*//*"∫Æ",4*//*"¿‰",5*//*"∏…",6*//*"‘Ô",7*//*"≥±",8*//*" ™",9*//*"¡π",10*/
-			case 0://∫Æ¿‰
-			{
-				pos_grade.x = 98+xOffset;
-				const uint8_t* index[] = {gImage_tRHgrade[4],gImage_tRHgrade[5]};
-				for (uint8_t i=0;i<2;i++)
-				{
-					lcd_drawBMP(index[i], &pos_grade,0xffff,color,0);	
-					pos_grade.x += 32;
-				}
-				break;
-			}
-			case 1://¿‰
-			{	
-				pos_grade.x = 114+xOffset;
-				const uint8_t* index[] = {gImage_tRHgrade[5]};
-				lcd_drawBMP(index[0], &pos_grade,0xffff,color,0);	
-				break;
-			}
-			case 2://¡π
-			{
-				pos_grade.x = 114+xOffset;
-				const uint8_t* index[] = {gImage_tRHgrade[10]};
-				lcd_drawBMP(index[0], &pos_grade,0xffff,color,0);	
-				break;
-			}
-			case 3:// Ê  
-			{
-				pos_grade.x = 98+xOffset;
-				const uint8_t* index[] = {gImage_tRHgrade[0],gImage_tRHgrade[1]};
-				for (uint8_t i=0;i<2;i++)
-				{
-					lcd_drawBMP(index[i], &pos_grade,0xffff,color,0);	
-					pos_grade.x += 32 ;
-				}	
-				break;
-			}
-			case 4://»»
-			{
-				pos_grade.x = 114+xOffset;
-				const uint8_t* index[] = {gImage_tRHgrade[3]};
-				lcd_drawBMP(index[0], &pos_grade,0xffff,color,0);	
-				break;
-			}
-			case 5://—◊»»
-			{
-				pos_grade.x = 98+xOffset;
-				const uint8_t* index[] = {gImage_tRHgrade[2],gImage_tRHgrade[3]};
-				for (uint8_t i=0;i<2;i++)
-				{
-					lcd_drawBMP(index[i], &pos_grade,0xffff,color,0);	
-					pos_grade.x += 32 ;
-				}
-				break;
-			}				
-		}
-	
-	}
-	else if (mode == HUMIDITY)
-	{
-			switch (grade)
-		{
-			case 0://∏…‘Ô
-			{
-				pos_grade.x = 98 + xOffset;
-				const uint8_t* index[] = {gImage_tRHgrade[6],gImage_tRHgrade[7]};
-				for (uint8_t i=0;i<2;i++)
-				{
-					lcd_drawBMP(index[i], &pos_grade,0xffff,color,0);	
-					pos_grade.x += 32 ;
-				}
-				break;
-			}
-			case 1:// Ê  
-			{
-				pos_grade.x = 98 + xOffset;
-				const uint8_t* index[] = {gImage_tRHgrade[0],gImage_tRHgrade[1]};
-				for (uint8_t i=0;i<2;i++)
-				{
-					lcd_drawBMP(index[i], &pos_grade,0xffff,color,0);	
-					pos_grade.x += 32 ;
-				}	
-				break;
-			}
-			case 2://≥± ™
-			{
-				pos_grade.x = 98+xOffset;
-				const uint8_t* index[] = {gImage_tRHgrade[8],gImage_tRHgrade[9]};
-				for (uint8_t i=0;i<2;i++)
-				{
-					lcd_drawBMP(index[i], &pos_grade,0xffff,color,0);	
-					pos_grade.x += 32 ;
-				}
-				break;
-			}
-			
-		}
-	
-	}
-	else 
-	{	
 	switch (grade)
 	{
 		case 0:
+			pos_grade.x += 30;
+			pos_grade.w = 56;
+			pos_grade.h = 18;
+			lcd_drawBMP(gImage_good, &pos_grade,0xffff,color,0);	
+			break;
 		case 1:	
-		{			
-			pos_grade.x = 110+xOffset;
-			const uint8_t* index[] = {gImage_grade[grade]};
-			lcd_drawBMP(index[0], &pos_grade,0xffff,color,0);	
-				break;
-		}
+			pos_grade.w = 112;
+			pos_grade.h = 18;
+			lcd_drawBMP(gImage_moderate, &pos_grade,0xffff,color,0);	
+			break;
 		case 2:
 		case 3:
+			pos_grade.w = 126;
+			pos_grade.h = 18;
+			lcd_drawBMP(gImage_unhealthy, &pos_grade,0xffff,color,0);	
+			break;
 		case 4:			
-		{	
-			pos_grade.x = 70+xOffset;
-			const uint8_t* index[] = {gImage_grade[grade],gImage_grade[5],gImage_grade[7],gImage_grade[8]};
-			for (uint8_t i=0;i<4;i++)
-			{
-				lcd_drawBMP(index[i], &pos_grade,0xffff,color,0);	
-				pos_grade.x += 24 ;
-			}
-			break;
-		}
 		case 5:
-		{	
-			pos_grade.x = 70+xOffset;	
-			const uint8_t* index[] = {gImage_grade[6],gImage_grade[4],gImage_grade[7],gImage_grade[8]};
-			for (uint8_t i=0;i<4;i++)
-			{
-				lcd_drawBMP(index[i], &pos_grade,0xffff,color,0);	
-				pos_grade.x += 24 ;
-			}
+			pos_grade.w = 126;
+			pos_grade.h = 18;
+			lcd_drawBMP(gImage_hazardous, &pos_grade,0xffff,color,0);	
 			break;
-		}
 		default:
 			break;
-	}
 	}
 	
 
@@ -3012,6 +2900,145 @@ void lcd_showOutDoor(uint32_t PM2_5Value,uint32_t outDoor_pm25,uint8_t needRedra
 	lcd_drawBMP(gImage_smallUg,&pos_pm25_unit,block2Color,0xffff,0);
 }
 
+void lcd_drawBigNumber(Rect_t * position,uint16_t color,uint32_t number,uint8_t width,uint8_t type,uint8_t dot_position)
+{
+//	uint8_t firstzero = 1;
+	uint8_t nbit[5]={0};
+//	uint8_t dot_position=0xff;
+//	uint8_t dotShowed = 0;
+	const static uint16_t div_nums[] = {10000,1000,100,10,1};
+  __IO int16_t currentx = 1;
+	 Rect_t nclearArea;
+	Rect_t dot_pos;
+	 uint8_t i, numshownd = 0;
+	 uint8_t validDigital = 0;
+//	static uint8_t lastDigitals = 0;
+	if (type==0)		
+	{
+		dot_pos.w = 24;	
+//		position->w = 55;
+//		position->h = 90;
+	}
+	else if (type==1)		
+	{
+		dot_pos.w = 8;	
+		position->w = 15;
+		position->h = 15;		
+	}
+	else if (type==2)		
+	{
+		dot_pos.w = 8;	
+//		position->w = 22;
+//		position->h = 43;		
+	}	
+	else if (type==3)		
+	{
+		dot_pos.w = 4;	
+		position->w = 8;
+		position->h = 9;		
+	}	
+	Rect_t tops = {.x = (position->x)+xOffset, .y = (position->y)+yOffset, .w = position->w, .h = position->h};	
+	for (i=0; i<sizeof(nbit)/sizeof(uint8_t); i++)
+	{
+		nbit[i] = (number/div_nums[i])%10;		
+	}
+	validDigital = 0;//¥¢¥ÊŒª ˝
+	uint32_t temp=1;
+	do
+	{
+		++validDigital;
+		temp *= 10;
+	}while(temp<=number);
+	if (validDigital>4)
+	{
+	//	dot_position = 0xff;
+	}	
+	else
+	{
+		//dot_position = 2;
+	}
+	if (validDigital>4)
+	{
+	currentx+= dot_pos.w>>1;
+	}
+		
+	
+	nclearArea.h = position->h;
+	nclearArea.w = currentx;	
+	nclearArea.x = tops.x+1;
+	nclearArea.y = tops.y;
+	lcd_drawRectangle(&nclearArea,rgb2c(0,0,0));		
+
+	for (i = fmin(5-width,width+dot_position-validDigital);i<5; i++)
+	{
+		tops.x = position->x + currentx + xOffset;
+//		if (i >= dot_position)
+//		{
+//			firstzero = 0;
+//		}
+//		if (!firstzero||(nbit[i])!=0)
+		if (type==0)
+		{
+		lcd_drawBMP(gImage_hugeNumber2[nbit[i]], &tops,color,0x0000,0);
+		}
+		else if (type==1)
+		{
+//		lcd_drawBMP(gImage_midNumber[nbit[i]], &tops,0x0000,color,0);
+		}
+//		else if (type==2)
+//		{
+//		lcd_drawBMP(gImage_midNumber[nbit[i]], &tops,color,0x0000,0);
+//		}
+		else if (type==3)
+		{
+		lcd_drawBMP(img_wifi_num[nbit[i]], &tops,color,0x0000,0);
+		}		
+			numshownd ++;
+//			firstzero = 0;
+			currentx += tops.w;
+		
+		if (numshownd == width)
+		{
+			break;
+		}
+		if (i == dot_position )
+		{				
+			dot_pos.h = tops.h;
+			dot_pos.y=tops.y;
+			dot_pos.x = tops.x + tops.w;	
+			if (type==0)		
+			{					
+				lcd_drawBMP(gImage_Hdot,&dot_pos,0x0000,color,0);
+			}
+			else if (type==1)		
+			{				
+				lcd_drawBMP(gImage_middot,&dot_pos,0x0000,color,0);
+			}
+			else if (type==2)		
+			{			
+				lcd_drawBMP(gImage_middot,&dot_pos,0x0000,color,0);
+			}
+			else if (type==3)		
+			{			
+				lcd_drawBMP(gImage_littleDot,&dot_pos,0x0000,color,0);
+			}						
+			currentx += dot_pos.w;
+			
+//			dotShowed = 1;
+		}
+	}
+	if (validDigital>4)
+	{
+		nclearArea.w = dot_pos.w>>1;
+
+		nclearArea.x = position->x + currentx+xOffset;
+
+		lcd_drawRectangle(&nclearArea,rgb2c(0,0,0));
+	}
+//	lastDigitals = validDigital;	
+
+}
+
 void lcd_showSingle(uint8_t wifistatus,uint32_t data_pm,uint8_t gas_type,uint16_t data_battery,uint8_t is_charging,uint8_t needRedraw)
 {
 		uint8_t level = 0;
@@ -3032,10 +3059,14 @@ void lcd_showSingle(uint8_t wifistatus,uint32_t data_pm,uint8_t gas_type,uint16_
 	};
 		Rect_t pos_pm25 =
 	{
+//		.x = 24,
+//		.y = 105,
+//		.w = 55,
+//		.h = 90,
 		.x = 24,
-		.y = 105,
-		.w = 55,
-		.h = 90,
+		.y = 125,
+		.w = 40,
+		.h = 71,
 	};
 
 		Rect_t pos_pm25_unit = 
@@ -3096,7 +3127,7 @@ void lcd_showSingle(uint8_t wifistatus,uint32_t data_pm,uint8_t gas_type,uint16_
 	lcd_drawBMP(gImage_wifiico,&pos_wifiIco,0,0xffff,0);
 	}
 		
-	lcd_drawBMP(gImage_bluesky,&pos_title,0,rgb2c(0,64,255),0);	
+//	lcd_drawBMP(gImage_bluesky,&pos_title,0,rgb2c(0,64,255),0);	
 	lcd_drawRectangle(&pos_line,0xffff);
 	pos_line.y = 269;
 	lcd_drawRectangle(&pos_line,0xffff);
@@ -3139,9 +3170,9 @@ void lcd_showSingle(uint8_t wifistatus,uint32_t data_pm,uint8_t gas_type,uint16_
 			Rect_t pos_hchotitle = 
 			{
 				.x = 18,
-				.y = 54,
+				.y = 64,
 				.w = 48,
-				.h = 16,
+				.h = 18,
 			};
 			Rect_t pos_hcho =
 			{
@@ -3160,11 +3191,11 @@ void lcd_showSingle(uint8_t wifistatus,uint32_t data_pm,uint8_t gas_type,uint16_
 			};
 			
 			
-			lcd_drawBMP(gImage_hcho,&pos_hchotitle,0,0xffff,0);
-			lcd_drawBMP(gImage_mgm3,&pos_hcho_unit,0,0xffff,0);
+			lcd_drawBMP(gImage_hchoTitle,&pos_hchotitle,0,0xffff,0);
+			lcd_drawBMP(gImage_mgm32,&pos_hcho_unit,0,0xffff,0);
 			
 			
-			if (1)
+			if (g_main_10s_countDown)//g_main_10s_countDown
 			{
 				Rect_t pos_line = 
 				{	
@@ -3182,7 +3213,8 @@ void lcd_showSingle(uint8_t wifistatus,uint32_t data_pm,uint8_t gas_type,uint16_
 			else
 			{				
 				setLevelColor(GAS_CH2O,data_pm,&color,&level);
-				lcd_drawNumber(&pos_pm25,0xffff,0,data_pm,3,0,2);
+//				lcd_drawNumber(&pos_pm25,0xffff,0,data_pm,3,0,2);
+				lcd_drawBigNumber(&pos_pm25,0xffff,data_pm,4,0,1);
 			}
 			//lcd_drawNumber(&pos_pm25,color,data_pm,3,0,2);
 			break;
@@ -3234,6 +3266,13 @@ void lcd_showSingle(uint8_t wifistatus,uint32_t data_pm,uint8_t gas_type,uint16_
 	
 	}
 	
+		static uint8_t testLevel = 0;
+		testLevel++;
+		if(testLevel>5)
+		{
+			testLevel=0;
+		}
+		level = testLevel;
 
 		static uint8_t lastLevel = 0;
 		if (lastLevel != level)
@@ -3510,8 +3549,10 @@ void lcd_showAll(uint32_t* data_pm,uint8_t needRedraw)
 	{
 		.x = 126,
 		.y = 218,
-		.w = 28,
-		.h = 14,
+		.w = 32,
+		.h = 12,
+//		.w = 28,
+//		.h = 14,
 	};
 	Rect_t pos_hcho =
 	{
@@ -3554,7 +3595,7 @@ void lcd_showAll(uint32_t* data_pm,uint8_t needRedraw)
 		lcd_drawBMP(gImage_preheat,&pos_wait,0xffff,0,0);
 	}
 	
-	lcd_drawBMP(gImage_shcho,&pos_hchotitle,block2Color,0xffff,0);
+	lcd_drawBMP(gImage_tvoc2,&pos_hchotitle,block2Color,0xffff,0);
 	lcd_drawBMP(gImage_mgm3,&pos_hcho_unit,block2Color,0xffff,0);
 
 	Rect_t pos_co2title = 

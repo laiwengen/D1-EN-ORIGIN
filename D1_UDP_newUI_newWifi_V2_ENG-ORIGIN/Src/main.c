@@ -917,7 +917,7 @@ char* uidEncyption(char* uid,uint16_t len,char* deviceType)
 		}
 		for (i = 0; i < len;i ++)
 		{
-			sprintf(uid2ASCii +  headerLength + 1 + (i<<1),"%02X",*(uidAfterEncyption + i));
+			sprintf(uid2ASCii +  headerLength + 1 + (i<<1),"%02x",*(uidAfterEncyption + i));
 		}		
 		for (i = 0; i < headerLength ; i ++)
 		{
@@ -1007,6 +1007,11 @@ void lcd_update(void)
 		break;
 		}
 		#endif
+		case STATUS_SINGLE_HCHO:
+		{
+			lcd_showSingle(g_main_wifi_status,pmValue[1],1,g_main_battery,g_main_is_charging,needRedraw);
+			break;
+		}
 	//	#endif
 //#endif
 		case STATUS_DATA_LIST:
@@ -2134,7 +2139,7 @@ void updateOutdoorAQI(void)
 		{
 			for (uint8_t i = 0; i < 16;i ++)
 			{
-				sprintf(tokenString + strlen(tokenString),"%02X",idBuffer[i]);
+				sprintf(tokenString + strlen(tokenString),"%02x",idBuffer[i]);
 			}
 			cJSON_AddStringToObject(token,"value",tokenString);
 			free(tokenString);
@@ -2156,6 +2161,21 @@ void updateOutdoorAQI(void)
 	}
 
 
+}
+
+#define UID_BASE              ((uint32_t)0x1FFFF7ACU)       /*!< Unique device ID register base address */
+uint8_t const* const g_uid = (uint8_t*) UID_BASE;
+
+int16_t number_toHexString(uint32_t value, char* out, int16_t bufferSize, uint8_t bigLetter) {
+	for (int16_t i = 0; i < bufferSize; i++) {
+		int8_t v = (value >> ((bufferSize - i - 1) * 4)) & 0xf;
+		if (v < 10) {
+			out[i] = '0' + v;
+		} else {
+			out[i] = (bigLetter ? 'A' : 'a') + v - 10;
+		}
+	}
+	return bufferSize;
 }
 
 /* USER CODE END 0 */
@@ -2299,13 +2319,21 @@ int main(void)
 		esp8266_init(&huart1);
 		esp8266_setSmartCallback(wifiSmartLinkStarted);
 		#if MAC2UID
-		char* mac = esp8266_getMAC();
-		if (mac)
+		
+		char uidBuffer[26];
+		uint8_t index=0;
+		for(uint8_t i=0;i<6;i++)
 		{
-		g_main_uid = (char*) malloc(strlen(mac)+1);		
-		strcpy(g_main_uid,mac);
-		*(g_main_uid + strlen(mac) ) = '\0';
-		free(mac);
+			index += number_toHexString(g_uid[i], uidBuffer+index, 2, 0);
+		}
+		uidBuffer[index]=0;
+//		char* mac = esp8266_getMAC();
+		if (uidBuffer)
+		{
+		g_main_uid = (char*) malloc(strlen(uidBuffer)+1);		
+		strcpy(g_main_uid,uidBuffer);
+		*(g_main_uid + strlen(uidBuffer) ) = '\0';
+		free(uidBuffer);
 		}
 //		g_main_uid = esp8266_getMAC();
 //		char* mac = "5c:cf:7f:03:0e:6b";
@@ -2319,7 +2347,7 @@ int main(void)
 		sprintf(g_main_uploadId,"%s-",DEVICE_VERSION); 
 		for (uint8_t i = 0; i < 16;i ++)
 		{
-			sprintf(g_main_uploadId + strlen(g_main_uploadId),"%02X",idBuffer[i]);
+			sprintf(g_main_uploadId + strlen(g_main_uploadId),"%02x",idBuffer[i]);
 		}
 		#endif
 	}
@@ -2351,6 +2379,7 @@ int main(void)
 
 		lcd_update();
 
+	g_main_status = STATUS_SINGLE_HCHO;
 	/* USER CODE END 2 */
 
   /* USER CODE BEGIN 3 */

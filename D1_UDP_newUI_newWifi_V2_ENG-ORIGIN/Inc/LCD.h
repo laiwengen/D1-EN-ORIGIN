@@ -65,7 +65,7 @@ void lcd_showBackGround(void);
 
 void lcd_showOutDoor(uint32_t PM2_5Value,uint32_t outDoor_pm25,uint8_t needRedraw);
 void lcd_showlogo(uint16_t color,uint8_t mode);
-//void lcd_showSingle(uint8_t wifistatus,uint32_t data_pm,uint8_t gas_type,uint16_t data_battery,uint8_t is_charging,uint8_t needRedraw);
+void lcd_showSingle(uint8_t wifistatus,uint32_t data_pm,uint8_t gas_type,uint16_t data_battery,uint8_t is_charging,uint8_t needRedraw);
 void lcd_showAll(uint32_t* data_pm,uint8_t needRedraw);
 void lcd_showDateTime(RTC_TimeTypeDef* time, RTC_DateTypeDef* date);
 void lcd_showhistory(uint32_t* data,uint16_t size ,uint8_t Mode,uint32_t mainNumber,uint8_t needRedraw);
